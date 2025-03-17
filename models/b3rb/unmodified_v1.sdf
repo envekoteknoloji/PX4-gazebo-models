@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version="1.9">
+  <model name="b3rb">
+    <self_collide>false</self_collide>
+    <static>false</static>
+
+    <!-- -->
+
+    <link name="base_link">
+      <pose>0 0 0.04 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>3.0</mass>
+        <inertia>
+          <ixx>0.0054</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0252</iyy>
+          <iyz>0</iyz>
+          <izz>0.0252</izz>
+        </inertia>
+      </inertial>
+      <visual name="BaseVisual">
+        <pose>0.002 0 -0.005 0 0 -1.5707</pose>
+        <geometry>
+          <mesh>
+            <uri>model://b3rb/meshes/b3rb.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="BaseCollision">
+        <pose>0 0 .06 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>.34 .09 .14</size>
+          </box>
+        </geometry>
+      </collision>
+      <sensor name="imu_sensor" type="imu">
+        <always_on>1</always_on>
+        <update_rate>250</update_rate>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.0003394</stddev>
+                <dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.0003394</stddev>
+                <dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.0003394</stddev>
+                <dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.004</stddev>
+                <dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.004</stddev>
+                <dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.004</stddev>
+                <dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+      </sensor>
+      <sensor name="mag_sensor" type="magnetometer">
+        <always_on>1</always_on>
+        <update_rate>50</update_rate>
+      </sensor>
+      <sensor name="navsat_sensor" type="navsat">
+        <always_on>1</always_on>
+        <update_rate>20</update_rate>
+        <navsat>
+          <position_sensing></position_sensing>
+          <velocity_sensing></velocity_sensing>
+        </navsat>
+      </sensor>
+      <sensor name="air_pressure_sensor" type="air_pressure">
+        <always_on>1</always_on>
+        <update_rate>50</update_rate>
+        <air_pressure>
+          <pressure>
+            <noise type="gaussian">
+              <mean>0</mean>
+              <stddev>0.01</stddev>
+            </noise>
+          </pressure>
+        </air_pressure>
+      </sensor>
+    </link>
+
+    <link name="base_footprint" />
+
+    <!-- -->
+
+    <link name="top_pole">
+      <pose relative_to="base_link">0 0 0.373 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0.25 0 0 0</pose> <!-- Centered along the height -->
+        <mass>0.35</mass>
+        <inertia>
+          <ixx>0.00732</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.00732</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.00732</izz>
+        </inertia>
+      </inertial>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.5</length>
+          </cylinder>
+        </geometry>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.5</length>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="pole_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>top_pole</child>
+    </joint>
+
+    <!-- -->
+
+    <joint name="base_joint" type="fixed">
+      <parent>base_footprint</parent>
+      <child>base_link</child>
+      <pose>0.0 0.0 -0.04 0 0 0</pose>
+    </joint>
+
+    <!-- -->
+
+    <link name="FrontRightWheel">
+      <pose relative_to="FrontRightWheelJoint">0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>.05</mass>
+        <inertia>
+          <ixx>0.00003331</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0000204</iyy>
+          <iyz>0</iyz>
+          <izz>0.0000204</izz>
+        </inertia>
+      </inertial>
+      <gravity>true</gravity>
+      <velocity_decay />
+      <visual name="FrontRightWheelVisual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://b3rb/meshes/wheel.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="FrontRightWheelCollision">
+        <pose>0 .015 0 -1.5707 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.03</length>
+            <radius>0.0365</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>5.0</mu>
+              <mu2>2.5</mu2>
+              <fdir1>0 0 1</fdir1>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+    <link name="FrontRightWheelSteering">
+      <pose relative_to="FrontRightWheelSteeringJoint">0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>0.005</mass>
+        <inertia>
+          <ixx>0.0000018</ixx>
+          <iyy>0.0000018</iyy>
+          <izz>0.0000018</izz>
+        </inertia>
+      </inertial>
+    </link>
+
+    <joint name="FrontRightWheelSteeringJoint" type="revolute">
+      <parent>base_link</parent>
+      <child>FrontRightWheelSteering</child>
+      <pose relative_to="base_link">.112 -.10 0 0 0 0</pose>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-0.6</lower>
+          <upper>0.6</upper>
+          <velocity>1000</velocity>
+          <effort>1000</effort>
+        </limit>
+      </axis>
+    </joint>
+
+    <joint name="FrontRightWheelJoint" type="revolute">
+      <parent>FrontRightWheelSteering</parent>
+      <child>FrontRightWheel</child>
+      <pose relative_to="FrontRightWheelSteeringJoint">0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.79769e+308</lower>
+          <upper>1.79769e+308</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <!-- -->
+
+    <link name="FrontLeftWheel">
+      <pose relative_to="FrontLeftWheelJoint">0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>.05</mass>
+        <inertia>
+          <ixx>0.00003331</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0000204</iyy>
+          <iyz>0</iyz>
+          <izz>0.0000204</izz>
+        </inertia>
+      </inertial>
+      <gravity>true</gravity>
+      <velocity_decay />
+      <visual name="FrontLeftWheelVisual">
+        <pose>0 0 0 0 0 3.14159</pose>
+        <geometry>
+          <mesh>
+            <uri>model://b3rb/meshes/wheel.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="FrontLeftWheelCollision">
+        <pose>0 -.015 0 -1.5707 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.03</length>
+            <radius>0.0365</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>5.0</mu>
+              <mu2>2.5</mu2>
+              <fdir1>0 0 1</fdir1>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+    <link name="FrontLeftWheelSteering">
+      <pose relative_to="FrontLeftWheelSteeringJoint">0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>0.005</mass>
+        <inertia>
+          <ixx>0.0000018</ixx>
+          <iyy>0.0000018</iyy>
+          <izz>0.0000018</izz>
+        </inertia>
+      </inertial>
+    </link>
+
+    <joint name="FrontLeftWheelSteeringJoint" type="revolute">
+      <parent>base_link</parent>
+      <child>FrontLeftWheelSteering</child>
+      <pose relative_to="base_link">.112 .10 0 0 0 0</pose>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-0.6</lower>
+          <upper>0.6</upper>
+          <velocity>1000</velocity>
+          <effort>1000</effort>
+        </limit>
+      </axis>
+    </joint>
+
+    <joint name="FrontLeftWheelJoint" type="revolute">
+      <parent>FrontLeftWheelSteering</parent>
+      <child>FrontLeftWheel</child>
+      <pose relative_to="FrontLeftWheelSteeringJoint">0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.79769e+308</lower>
+          <upper>1.79769e+308</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <!-- -->
+
+    <link name="front_camera_link">
+      <pose>0.173 0 0.225 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>0.00000130666</ixx> <!-- (.01/12)*(.028^2+.028^2) -->
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00000130666</iyy> <!-- (.01/12)*(.028^2+.028^2) -->
+          <iyz>0</iyz>
+          <izz>0.00000130666</izz> <!-- (.01/12)*(.028^2+.028^2) -->
+        </inertia>
+      </inertial>
+      <visual name="camera_arm">
+        <pose>0 0 -0.05 0 0.3 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.09</length>
+            <radius>0.003</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>1.0 1.0 1.0</diffuse>
+          <specular>1.0 1.0 1.0</specular>
+        </material>
+      </visual>
+      <visual name="camera_housing">
+        <pose>.013 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>.008 .028 .028</size>
+          </box>
+        </geometry>
+        <material>
+          <diffuse>1.0 1.0 1.0</diffuse>
+          <specular>1.0 1.0 1.0</specular>
+        </material>
+      </visual>
+      <visual name="camera_housing_mount">
+        <pose>.008 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>.008 .014 .01</size>
+          </box>
+        </geometry>
+        <material>
+          <diffuse>1.0 1.0 1.0</diffuse>
+          <specular>1.0 1.0 1.0</specular>
+        </material>
+      </visual>
+      <visual name="camera_lens">
+        <pose>.016 0 .006 0 1.57079632679 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.003</length>
+            <radius>0.004</radius>
+          </cylinder>
+        </geometry>
+      </visual>
+      <sensor name="rpiv2cam" type="camera">
+        <pose>.016 0 .006 0 0 0</pose>
+        <camera>
+          <camera_info_topic>camera_info/front_rgb</camera_info_topic>
+          <horizontal_fov>1.0821</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.01</near>
+            <far>100</far>
+          </clip>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+        <topic>/camera/front_rgb</topic>
+      </sensor>
+      <sensor name="StereoOV7251" type="depth_camera">
+        <pose>.016 0 .006 0 0 0</pose>
+        <camera>
+          <horizontal_fov>1.274</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R_FLOAT32</format>
+          </image>
+          <clip>
+            <near>0.2</near>
+            <far>19.1</far>
+          </clip>
+          <depth_camera>
+            <clip>
+              <near>0.2</near>
+              <far>19.1</far>
+            </clip>
+          </depth_camera>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+        <topic>/camera/front_depth</topic>
+      </sensor>
+    </link>
+
+    <joint name="front_camera_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>front_camera_link</child>
+    </joint>
+
+    <!-- -->
+
+    <link name="top_camera_link">
+      <pose relative_to="top_pole">0.025 0 0.1 0 0.4 0</pose>
+      <inertial>
+        <mass>0.003</mass>
+        <inertia>
+          <ixx>0.0000000294</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0000000294</iyy>
+          <iyz>0</iyz>
+          <izz>0.0000000392</izz>
+        </inertia>
+      </inertial>
+      <visual name="camera_housing">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.009 0.025 0.025</size>
+          </box>
+        </geometry>
+        <material>
+          <diffuse>1.0 1.0 1.0</diffuse>
+          <specular>1.0 1.0 1.0</specular>
+        </material>
+      </visual>
+      <visual name="camera_housing_mount">
+        <pose>-0.005 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.009 .014 .01</size>
+          </box>
+        </geometry>
+        <material>
+          <diffuse>1.0 1.0 1.0</diffuse>
+          <specular>1.0 1.0 1.0</specular>
+        </material>
+      </visual>
+      <visual name="camera_lens">
+        <pose>0.004 0 .006 0 1.57079632679 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.003</length>
+            <radius>0.004</radius>
+          </cylinder>
+        </geometry>
+      </visual>
+      <sensor name="rpiv2cam" type="camera">
+        <pose>0.004 0 .006 0 0 0</pose>
+        <camera>
+          <horizontal_fov>1.0821</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.01</near>
+            <far>100</far>
+          </clip>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+        <topic>/camera/top_rgb</topic>
+      </sensor>
+    </link>
+
+    <joint name="top_camera_joint" type="fixed">
+      <parent>top_pole</parent>
+      <child>top_camera_link</child>
+    </joint>
+
+    <!-- -->
+
+    <joint name="RearRightWheelJoint" type="revolute">
+      <parent>base_link</parent>
+      <child>RearRightWheel</child>
+      <pose relative_to="base_link">-.1135 -.10 0 0 0 0</pose>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.79769e+308</lower>
+          <upper>1.79769e+308</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <joint name="RearLeftWheelJoint" type="revolute">
+      <parent>base_link</parent>
+      <child>RearLeftWheel</child>
+      <pose relative_to="base_link">-.1135 .10 0 0 0 0</pose>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.79769e+308</lower>
+          <upper>1.79769e+308</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <link name="RearRightWheel">
+      <pose relative_to="RearRightWheelJoint">0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>.05</mass>
+        <inertia>
+          <ixx>0.00003331</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0000204</iyy>
+          <iyz>0</iyz>
+          <izz>0.0000204</izz>
+        </inertia>
+      </inertial>
+      <gravity>true</gravity>
+      <velocity_decay />
+      <visual name="RearRightWheelVisual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://b3rb/meshes/wheel.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="RearRightWheelCollision">
+        <pose>0 .015 0 -1.5707 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.03</length>
+            <radius>0.0365</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>5.0</mu>
+              <mu2>2.5</mu2>
+              <fdir1>0 0 1</fdir1>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+    <link name="RearLeftWheel">
+      <pose relative_to="RearLeftWheelJoint">0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>.05</mass>
+        <inertia>
+          <ixx>0.00003331</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0000204</iyy>
+          <iyz>0</iyz>
+          <izz>0.0000204</izz>
+        </inertia>
+      </inertial>
+      <gravity>true</gravity>
+      <velocity_decay />
+      <visual name="RearLeftWheelVisual">
+        <pose>0 0 0 0 0 3.14159</pose>
+        <geometry>
+          <mesh>
+            <uri>model://b3rb/meshes/wheel.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="RearLeftWheelCollision">
+        <pose>0 -.015 0 -1.5707 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.03</length>
+            <radius>0.0365</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>5.0</mu>
+              <mu2>2.5</mu2>
+              <fdir1>0 0 1</fdir1>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+    <!-- -->
+
+    <plugin
+      filename="gz-sim-odometry-publisher-system"
+      name="gz::sim::systems::OdometryPublisher">
+      <xyz_offset>0 0 0</xyz_offset>
+      <rpy_offset>0 0 0</rpy_offset>
+      <gaussian_noise>0</gaussian_noise>
+      <robot_base_frame>base_link</robot_base_frame>
+      <dimensions>3</dimensions>
+      <odom_publish_frequency>30</odom_publish_frequency>
+      <odom_frame>odom</odom_frame>
+    </plugin>
+
+    <plugin
+      filename="gz-sim-ackermann-steering-system"
+      name="gz::sim::systems::AckermannSteering">
+      <steering_only>true</steering_only>
+      <use_actuator_msg>true</use_actuator_msg>
+      <sub_topic>servo_0</sub_topic>
+      <left_steering_joint>FrontLeftWheelSteeringJoint</left_steering_joint>
+      <right_steering_joint>FrontRightWheelSteeringJoint</right_steering_joint>
+      <steering_limit>0.4</steering_limit>
+      <steer_p_gain>8.0</steer_p_gain>
+      <wheel_base>.2255</wheel_base>
+      <wheel_separation>.2</wheel_separation>
+    </plugin>
+
+    <plugin
+      filename="gz-sim-joint-controller-system"
+      name="gz::sim::systems::JointController">
+      <joint_name>RearRightWheelJoint</joint_name>
+      <joint_name>RearLeftWheelJoint</joint_name>
+      <joint_name>FrontRightWheelJoint</joint_name>
+      <joint_name>FrontLeftWheelJoint</joint_name>
+      <use_actuator_msg>true</use_actuator_msg>
+      <actuator_number>0</actuator_number>
+      <sub_topic>command/motor_speed</sub_topic>
+    </plugin>
+
+    <plugin
+      filename="gz-sim-joint-state-publisher-system"
+      name="gz::sim::systems::JointStatePublisher">
+      <joint_name>RearRightWheelJoint</joint_name>
+      <joint_name>RearLeftWheelJoint</joint_name>
+      <joint_name>FrontRightWheelJoint</joint_name>
+      <joint_name>FrontLeftWheelJoint</joint_name>
+    </plugin>
+
+    <!-- -->
+
+  </model>
+</sdf>

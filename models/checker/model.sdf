@@ -1,0 +1,30 @@
+<sdf version="1.6">
+  <model name="checker">
+    <static>true</static>
+    <link name="body">
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>file:///home/user/workspace/PX4-Autopilot/Tools/simulation/gz/models/checker/media/checker.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>      
+      <collision name="visual">
+        <geometry>
+          <mesh>
+            <uri>file:///home/user/workspace/PX4-Autopilot/Tools/simulation/gz/models/checker/media/checker.dae</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <friction>
+            <ode/>
+          </friction>
+          <bounce/>
+          <contact/>
+          </surface>
+      </collision>
+      <enable_wind>false</enable_wind>
+      <self_collide>false</self_collide>
+    </link>
+  </model>
+</sdf>
