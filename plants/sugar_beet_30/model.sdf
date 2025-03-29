@@ -1,0 +1,14 @@
+<sdf version="1.6">
+  <model name="sugar_beet_30">
+    <static>true</static>
+    <link name="body">
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>file:///sugar_beet_30/media/sugar_beet.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
