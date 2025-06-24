@@ -144,7 +144,7 @@
     <!-- -->
 
     <link name="realsense_camera_link">
-      <pose relative_to='base_link'>0 0 0.6 0 0.5235988 0</pose>
+      <pose relative_to='base_link'>0.0384 0 0.4330 0 0.5235988 0</pose>
       <inertial>
         <mass>0.003</mass>
         <inertia>
